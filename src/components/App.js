@@ -1,17 +1,67 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import MainLayout from '../layouts/MainLayout'
-import BodyContainer from './BodyContainer'
+import React, { Component } from 'react'
+import { Router, Route } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
-const App = () => (
-  <Router>
-    <MainLayout>
-      <Switch>
-        <Route exact path="/" component={BodyContainer} />
-        <Route path="/:ownerUsername" component={BodyContainer} />
-      </Switch>
-    </MainLayout>
+const history = createBrowserHistory()
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      counter: 0,
+      showTest: false,
+    }
+  }
+  componentDidMount() {
+    console.log('App didMount')
+  }
+
+  componentDidUpdate() {
+    console.log('App didUpdate')
+  }
+
+  clickHandler = () => {
+    this.setState({
+      counter: this.state.counter + 1,
+    })
+  }
+
+  toggleHandler = () => {
+    this.setState({
+      showTest: !this.state.showTest,
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <div>Counter: {this.state.counter}</div>
+        <button onClick={this.clickHandler}>+1</button>
+        <button onClick={this.toggleHandler}>Toggle</button>
+        {this.state.showTest ? <Test /> : null}
+      </div>
+    )
+  }
+}
+
+class Test extends Component {
+  componentDidMount() {
+    console.log('Test didMount')
+  }
+  render() {
+    return (
+      <div>Test</div>
+    )
+  }
+}
+
+const MainApp = () => (
+  <Router history={history}>
+    <div>
+      <Route exact path="/" component={App} />
+      <Route path="/test" component={Test} />
+    </div>
   </Router>
 )
 
-export default App
+export default MainApp

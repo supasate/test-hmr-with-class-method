@@ -8,6 +8,7 @@
   "plugins": [
     "import",
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
